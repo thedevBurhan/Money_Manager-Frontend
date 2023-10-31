@@ -81,7 +81,7 @@ const Login = () => {
     const datas = data.data.statusCode;
     console.log(datas);
     if (datas === 404) {
-      toast.success('😳User Not Found!', {
+      toast.success("😳User Not Found!", {
         position: "top-right",
         autoClose: 2000,
         hideProgressBar: false,
@@ -90,22 +90,22 @@ const Login = () => {
         draggable: true,
         progress: undefined,
         theme: "dark",
-        });
+      });
 
       history.push("/SignIn");
     } else if (datas === 400) {
-      toast.error('Invalid Password 😳', {
+      toast.error("Invalid Password 😳", {
         position: "top-right",
-        autoClose:3000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
         theme: "dark",
-        });
+      });
     } else {
-      toast.success('😁❤️ Success!', {
+      toast.success("😁❤️ Success!", {
         position: "top-right",
         autoClose: 1000,
         hideProgressBar: false,
@@ -114,7 +114,7 @@ const Login = () => {
         draggable: true,
         progress: undefined,
         theme: "dark",
-        });
+      });
       localStorage.setItem("token", data.data.token);
       localStorage.setItem("id", data.data.user._id);
       localStorage.setItem("user", data.data.user.email);
@@ -129,7 +129,7 @@ const Login = () => {
       <body className="mainBg">
         <Base title={"Login To Your Account"}>
           <div className="container">
-            <Card sx={{ p: "10px" }} className="Bg-color container">
+            <Card sx={{ p: "10px" }} className="Bg-color">
               <div className="bg">
                 <h3 className="sub_heading">Don't have an account?</h3>
                 <Button

@@ -87,7 +87,7 @@ const Register = () => {
       <body className="mainBg">
         <Base title={"New Registration"}>
           <div className="container">
-            <Card sx={{ p: "10px" }} className="Bg-color container">
+            <Card sx={{ p: "10px" }} className="Bg-color">
               <form onSubmit={handleSubmit}>
                 <CardContent>
                   <h2 className="headings">For New Users</h2>

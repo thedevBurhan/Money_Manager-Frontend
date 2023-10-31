@@ -268,54 +268,47 @@ const DashBoard = () => {
             <h4 className="subDhead">GIVING LIFE TO YOUR FINANCES!</h4>
           </div>
         </div>
-
-        <Box
-          className="box"
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            textAlign: "center",
-            mt: "20px",
-            ml: "25px",
-          }}
-        >
-          <Typography sx={{ minWidth: 100 }}>Home</Typography>
-          <Typography sx={{ minWidth: 100 }}>Transactions</Typography>
+        <div className="box">
+          <div className="typo">
+            <Typography>Home</Typography>
+            <Typography>Transactions</Typography>
+          </div>
           {/* for categories */}
           <div>
-            <Box sx={{ minWidth: 140, ml: 3, mr: 101, mb: 0 }}>
-              <FormControl>
-                <InputLabel id="demo-simple-select-label">Account</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={type}
-                  label="Account"
-                  onChange={handleChange}
-                  sx={{ width: 100 }}
-                >
-                  <MenuItem value="Personal">Personal</MenuItem>
-                  <MenuItem value="Office">Office</MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
+            <FormControl>
+              <InputLabel id="demo-simple-select-label">Account</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={type}
+                label="Account"
+                onChange={handleChange}
+                sx={{ width: 100 }}
+              >
+                <MenuItem value="Personal">Personal</MenuItem>
+                <MenuItem value="Office">Office</MenuItem>
+              </Select>
+            </FormControl>
           </div>
           {/* ----------------------- */}
           {/* for add new section */}
           <div>
-            <Box sx={{ mr: 1 }}>
-              <Tooltip title="ADD NEW TRANSACTION">
-                <IconButton
-                  onClick={handleClicks}
-                  size="small"
-                  sx={{ ml: 2 }}
-                  aria-controls={opens ? "account-menu" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={opens ? "true" : undefined}
-                >
-                  <AddCircleOutlineOutlinedIcon></AddCircleOutlineOutlinedIcon>
-                </IconButton>
-              </Tooltip>
+            <Box>
+              <div className="types">
+                <Tooltip title="ADD NEW TRANSACTION">
+                  <IconButton
+                    onClick={handleClicks}
+                    size="small"
+                    sx={{ ml: 2 }}
+                    aria-controls={opens ? "account-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={opens ? "true" : undefined}
+                  >
+                    <AddCircleOutlineOutlinedIcon></AddCircleOutlineOutlinedIcon>
+                  </IconButton>
+                </Tooltip>
+                <Typography>Add New</Typography>
+              </div>
             </Box>
             {/* for pop-up add new  */}
             <Menu
@@ -353,7 +346,7 @@ const DashBoard = () => {
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
               <div>
-                <form  onSubmit={addTransaction}>
+                <form onSubmit={addTransaction}>
                   <MenuItem>
                     <Typography>Transactions Type : </Typography>{" "}
                     <TextField
@@ -433,12 +426,7 @@ const DashBoard = () => {
                       }}
                     />
                   </MenuItem>
-                  <Button
-                    className="fields"
-                    variant="text"
-                    type="submit"
-                   
-                  >
+                  <Button className="fields" variant="text" type="submit">
                     Submit
                   </Button>
                 </form>
@@ -447,23 +435,25 @@ const DashBoard = () => {
             {/* ---------------------- */}
           </div>
           {/* ---------------------------- */}
-          <Typography sx={{ minWidth: 100 }}>{userName}</Typography>
-          {/* for Logout */}
-          <Tooltip title="Account settings">
-            <IconButton
-              onClick={handleClick}
-              size="small"
-              sx={{ ml: 2 }}
-              aria-controls={open ? "account-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-            >
-              <Avatar
-                sx={{ width: 32, height: 32, bgcolor: "#2a9df4" }}
-              ></Avatar>
-            </IconButton>
-          </Tooltip>
-        </Box>
+          <div className="typos">
+            <Typography>{userName}</Typography>
+            {/* for Logout */}
+            <Tooltip title="Account settings">
+              <IconButton
+                onClick={handleClick}
+                size="small"
+                sx={{ ml: 2 }}
+                aria-controls={open ? "account-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+              >
+                <Avatar
+                  sx={{ width: 32, height: 32, bgcolor: "#2a9df4" }}
+                ></Avatar>
+              </IconButton>
+            </Tooltip>
+          </div>
+        </div>
         {/* for logout pop-up */}
         <Menu
           anchorEl={anchorEl}
@@ -529,8 +519,8 @@ const DashBoard = () => {
             </Typography>
             <div>
               <TableContainer component={Paper} className="Tablecontainer">
-                <Table sx={{ width: 850 }} aria-label="simple table">
-                  <TableHead sx={{ mr: 20 }}>
+                <Table stickyHeader aria-label="sticky table">
+                  <TableHead>
                     <TableRow>
                       <TableCell sx={{ color: "#6a329f" }}>Date</TableCell>
                       <TableCell sx={{ color: "#6a329f" }}>Category</TableCell>
@@ -541,7 +531,7 @@ const DashBoard = () => {
                       <TableCell sx={{ color: "#6a329f" }}>Delete</TableCell>
                     </TableRow>
                   </TableHead>
-                  <TableBody>
+                  <TableBody className="tablerow">
                     {transData.length > 0 && transData ? (
                       transData.length > 0 &&
                       transData.map((item, index, _id) => {
@@ -612,11 +602,12 @@ const DashBoard = () => {
               </TableContainer>
             </div>
           </Card>
-          <img className="imggif" src={gif} alt="Money_Management_vedio..." />
+          {/* <img className="imggif" src={gif} alt="Money_Management_vedio..." /> */}
         </div>
         {/* For print */}
         <SpeedDial
           ariaLabel="SpeedDial basic example"
+          className="speeddail"
           sx={{ position: "absolute", bottom: 16, right: 16 }}
           icon={<SpeedDialIcon />}
         >
