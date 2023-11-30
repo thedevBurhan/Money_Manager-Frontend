@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Base from "../../Base/Base";
-import Card from "@mui/material/Card";
+
+import "./Reg.css";
 import {
   Button,
   CardContent,
@@ -48,7 +49,7 @@ const Login = () => {
     }
 
     setOpen(false);
-    history.push("/DashBoard");
+    history.push("/MainDashBoard");
   };
   const action = (
     <React.Fragment>
@@ -126,96 +127,92 @@ const Login = () => {
   };
   return (
     <div>
-      <body className="mainBg">
+      <body className="mainBgReg">
         <Base title={"Login To Your Account"}>
-          <div className="container">
-            <Card sx={{ p: "10px" }} className="Bg-color">
-              <div className="bg">
-                <h3 className="sub_heading">Don't have an account?</h3>
+          <div className="containerReg">
+            <form onSubmit={handleSubmit} className="formReg">
+              <CardContent>
+                <h2 className="headingsReg">For Existing Users</h2>
+                <TextField
+                  sx={{ width: "300px" }}
+                  id="standard-basic"
+                  variant="standard"
+                  label="Enter Name"
+                  name="name"
+                  type="name"
+                  size="small"
+                  onBlur={handleBlur}
+                  value={values.name}
+                  onChange={handleChange}
+                />
+                <div style={{ color: "crimson", fontSize: "small" }}>
+                  {touched.name && errors ? errors.name : ""}
+                </div>
+              </CardContent>
+              <CardContent>
+                <TextField
+                  sx={{ width: "300px" }}
+                  label="Email"
+                  name="email"
+                  id="standard-basic"
+                  variant="standard"
+                  onBlur={handleBlur}
+                  value={values.email}
+                  onChange={handleChange}
+                  type="email"
+                  size="small"
+                />
+                <div style={{ color: "crimson", fontSize: "small" }}>
+                  {touched.email && errors ? errors.email : ""}
+                </div>
+              </CardContent>
+
+              <CardContent>
+                <TextField
+                  sx={{ width: "300px" }}
+                  id="standard-basic"
+                  variant="standard"
+                  type="password"
+                  label="Password"
+                  name="password"
+                  onBlur={handleBlur}
+                  value={values.password}
+                  onChange={handleChange}
+                  size="small"
+                />
+                <div style={{ color: "crimson", fontSize: "small" }}>
+                  {touched.password && errors ? errors.password : ""}
+                </div>
+              </CardContent>
+              <div className="forget-passwordReg">
+                <p>Forget password?</p>
+              </div>
+              <div className="buttonReg">
                 <Button
-                  className="button-Bg"
+                  className="button-BgReg"
+                  type="submit"
+                  variant="outlined"
+                >
+                  Login
+                </Button>
+                <Button
+                  className="button-BgReg"
                   onClick={() => history.push("/SignIn")}
                   variant="outlined"
                 >
-                  Register
+                  Sign Up
                 </Button>
               </div>
-              <form onSubmit={handleSubmit} className="form">
-                <CardContent>
-                  <h2 className="headings">For Existing Users</h2>
-                  <TextField
-                    sx={{ width: "300px" }}
-                    id="standard-basic"
-                    variant="standard"
-                    label="Enter Name"
-                    name="name"
-                    type="name"
-                    size="small"
-                    onBlur={handleBlur}
-                    value={values.name}
-                    onChange={handleChange}
-                  />
-                  <div style={{ color: "crimson", fontSize: "small" }}>
-                    {touched.name && errors ? errors.name : ""}
-                  </div>
-                </CardContent>
-                <CardContent>
-                  <TextField
-                    sx={{ width: "300px" }}
-                    label="Email"
-                    name="email"
-                    id="standard-basic"
-                    variant="standard"
-                    onBlur={handleBlur}
-                    value={values.email}
-                    onChange={handleChange}
-                    type="email"
-                    size="small"
-                  />
-                  <div style={{ color: "crimson", fontSize: "small" }}>
-                    {touched.email && errors ? errors.email : ""}
-                  </div>
-                </CardContent>
-
-                <CardContent>
-                  <TextField
-                    sx={{ width: "300px" }}
-                    id="standard-basic"
-                    variant="standard"
-                    type="password"
-                    label="Password"
-                    name="password"
-                    onBlur={handleBlur}
-                    value={values.password}
-                    onChange={handleChange}
-                    size="small"
-                  />
-                  <div style={{ color: "crimson", fontSize: "small" }}>
-                    {touched.password && errors ? errors.password : ""}
-                  </div>
-                </CardContent>
-                <div className="forget-password">
-                  <p>Forget password?</p>
-                </div>
-                <div className="button">
-                  <Button
-                    className="button-Bg"
-                    type="submit"
-                    variant="outlined"
-                  >
-                    Login
-                  </Button>
-                </div>
-              </form>
-            </Card>
-            <Snackbar
-              open={open}
-              autoHideDuration={3000}
-              onClose={handleClose}
-              message="Login Successfully"
-              action={action}
-            />
+            </form>
           </div>
+
+          <Snackbar
+            open={open}
+            autoHideDuration={3000}
+            onClose={handleClose}
+            message="Login Successfully"
+            action={action}
+          />
         </Base>
       </body>
     </div>

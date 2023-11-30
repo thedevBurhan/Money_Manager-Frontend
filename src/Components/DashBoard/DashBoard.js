@@ -1,29 +1,18 @@
 import React, { useEffect, useState } from "react";
 import moneymanager from "./money-manager-logo.png";
-import Box from "@mui/material/Box";
-import Avatar from "@mui/material/Avatar";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
-import Settings from "@mui/icons-material/Settings";
-import Logout from "@mui/icons-material/Logout";
-import SpeedDial from "@mui/material/SpeedDial";
-import SpeedDialIcon from "@mui/material/SpeedDialIcon";
-import SpeedDialAction from "@mui/material/SpeedDialAction";
-import FileCopyIcon from "@mui/icons-material/FileCopyOutlined";
-import SaveIcon from "@mui/icons-material/Save";
-import PrintIcon from "@mui/icons-material/Print";
-import ShareIcon from "@mui/icons-material/Share";
+import MenuIcon from "@mui/icons-material/Menu";
+import HomeIcon from "@mui/icons-material/Home";
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
+import LogoutIcon from "@mui/icons-material/Logout";
+import PersonIcon from "@mui/icons-material/Person";
+import "../MainDashboard/MainDashBoard.css";
 import {
-  Button,
-  Card,
   FormControl,
-  InputLabel,
   Select,
   Table,
   TableBody,
@@ -31,35 +20,30 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  TextField,
 } from "@mui/material";
-import gif from "./Gif.gif";
-import Paper from "@mui/material/Paper";
+
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import axios from "axios";
 import Swal from "sweetalert2";
 // import { Toast } from "react-toastify/dist/components";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
-//For print----
-const actions = [
-  { icon: <FileCopyIcon />, name: "Copy" },
-  { icon: <SaveIcon />, name: "Save" },
-  { icon: <PrintIcon />, name: "Print" },
-  { icon: <ShareIcon />, name: "Share" },
-];
-// -----------------
+
 const DashBoard = () => {
   const history = useHistory();
+  // HamBurger Menu------------------------------
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+  const user = window.localStorage.getItem("user");
+  // ------------------------------------------------------------
   const [transData, setTransData] = useState([]);
   const [type, setType] = useState("");
-  const [account, setAccounts] = useState("");
-  const [category, setCategory] = useState("");
-  const [date, setDate] = useState("");
-  const [amount, setAmount] = useState("");
+
   const [datas, setDatas] = useState({});
-  // getting user name
-  const userName = localStorage.getItem("user");
+
   // For  nav add new------
   const [anchorE, setAnchorE] = React.useState();
   const opens = Boolean(anchorE);
@@ -83,24 +67,12 @@ const DashBoard = () => {
       toast.addEventListener("mouseleave", Swal.resumeTimer);
     },
   });
-  // For menu nav------
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  // --------------------
-  // for Categories---
-  // const [acc, setAcc] = React.useState("");
 
   const handleChange = (event) => {
-    var x = event.target.value; // Store the selected value in variable x
+    var x = event.target.value;
     // console.log(x);
-    setType(x); // Update the acc state variable with the selected value
-    handleFilterChange(x); // Call the function with the selected value
+    setType(x);
+    handleFilterChange(x);
   };
 
   //  -----------
@@ -157,47 +129,7 @@ const DashBoard = () => {
       console.log(error);
     }
   };
-  // to add the transaction data
-  const addTransaction = async (e) => {
-    // console.log(window.localStorage.getItem("id"));
-    e.preventDefault();
-    try {
-      let req = await axios.post(
-        `https://money-manager-backend-smd.vercel.app/transdata/`,
-        {
-          userid: window.localStorage.getItem("id"),
-          type,
-          account,
-          category,
-          date,
-          amount,
-        },
-        {
-          headers: {
-            authtoken: window.localStorage.getItem("token"),
-          },
-        }
-      );
-      const { data } = req;
-      //console.log(data);
-      const { message, statusCode } = data;
-      // console.log(data);
-      if (statusCode === 200) {
-        setType("");
-        setAccounts("");
-        setCategory("");
-        getTransData();
-        Toast.fire({ icon: "success", title: message });
-      } else {
-        Toast.fire({
-          icon: "error",
-          title: "Error in adding Transaction Data",
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
   const handleFilterChange = async (selectedAccount) => {
     // console.log(selectedAccount);
     try {
@@ -255,6 +187,7 @@ const DashBoard = () => {
   return (
     <div>
       <body className="mainBg">
+        {/* AppLication Headind */}
         <div className="Dheading">
           <img
             className="moneymangerLogo"
@@ -268,257 +201,101 @@ const DashBoard = () => {
             <h4 className="subDhead">GIVING LIFE TO YOUR FINANCES!</h4>
           </div>
         </div>
-        <div className="box">
-          <div className="typo">
-            <Typography>Home</Typography>
-            <Typography>Transactions</Typography>
-          </div>
-          {/* for categories */}
-          <div>
-            <FormControl>
-              <InputLabel id="demo-simple-select-label">Account</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={type}
-                label="Account"
-                onChange={handleChange}
-                sx={{ width: 100 }}
-              >
-                <MenuItem value="Personal">Personal</MenuItem>
-                <MenuItem value="Office">Office</MenuItem>
-              </Select>
-            </FormControl>
-          </div>
-          {/* ----------------------- */}
-          {/* for add new section */}
-          <div>
-            <Box>
-              <div className="types">
-                <Tooltip title="ADD NEW TRANSACTION">
-                  <IconButton
-                    onClick={handleClicks}
-                    size="small"
-                    sx={{ ml: 2 }}
-                    aria-controls={opens ? "account-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={opens ? "true" : undefined}
-                  >
-                    <AddCircleOutlineOutlinedIcon></AddCircleOutlineOutlinedIcon>
-                  </IconButton>
-                </Tooltip>
-                <Typography>Add New</Typography>
-              </div>
-            </Box>
-            {/* for pop-up add new  */}
-            <Menu
-              anchorEl={anchorE}
-              id="account-menu"
-              open={opens}
-              onClose={handleCloses}
-              PaperProps={{
-                elevation: 0,
-                sx: {
-                  overflow: "visible",
-                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                  mt: 2,
-                  "& .MuiAvatar-root": {
-                    width: 32,
-                    height: 32,
-                    ml: 2,
-                    mr: 1,
-                  },
-                  "&:before": {
-                    content: '""',
-                    display: "block",
-                    position: "absolute",
-                    top: 0,
-                    right: 14,
-                    width: 15,
-                    height: 15,
-                    bgcolor: "background.paper",
-                    transform: "translateY(-50%) rotate(45deg)",
-                    zIndex: 0,
-                  },
-                },
-              }}
-              transformOrigin={{ horizontal: "right", vertical: "top" }}
-              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+        {/* ----------------------------------- */}
+        {/* HamBurger Menu Start */}
+        <div className="hamburger-menu">
+          <MenuIcon
+            className={`menu-button ${menuOpen ? "open" : ""}`}
+            onClick={toggleMenu}
+          ></MenuIcon>
+          <div className={`menu-items ${menuOpen ? "open" : ""}`}>
+            <MenuItem className="menu-item">
+              <ListItemIcon sx={{ color: "#8a98d5c5" }}>
+                <PersonIcon fontSize="small" />
+              </ListItemIcon>
+              {user}
+            </MenuItem>
+            <MenuItem
+              className="menu-item"
+              onClick={() => history.push("/MainDashBoard")}
             >
-              <div>
-                <form onSubmit={addTransaction}>
-                  <MenuItem>
-                    <Typography>Transactions Type : </Typography>{" "}
-                    <TextField
-                      className="fields"
-                      id="standard-basic"
-                      label="Eg:Personal/Office"
-                      variant="standard"
-                      // name="type"
-                      value={type}
-                      type="text"
-                      required
-                      onChange={(e) => {
-                        setType(e.target.value);
-                      }}
-                    />
-                  </MenuItem>
-
-                  <MenuItem>
-                    <Typography>Date : </Typography>{" "}
-                    <TextField
-                      className="fields"
-                      id="standard-basic"
-                      variant="standard"
-                      value={date}
-                      type="Date"
-                      name="date"
-                      required
-                      onChange={(e) => {
-                        setDate(e.target.value);
-                      }}
-                    />
-                  </MenuItem>
-                  <MenuItem>
-                    <Typography>Category : </Typography>{" "}
-                    <TextField
-                      className="fields"
-                      id="standard-basic"
-                      variant="standard"
-                      value={category}
-                      type="text"
-                      name="category"
-                      required
-                      onChange={(e) => {
-                        setCategory(e.target.value);
-                      }}
-                    />
-                  </MenuItem>
-                  <MenuItem>
-                    <Typography>Account : </Typography>{" "}
-                    <TextField
-                      className="fields"
-                      id="standard-basic"
-                      variant="standard"
-                      value={account}
-                      type="text"
-                      name="account"
-                      required
-                      onChange={(e) => {
-                        setAccounts(e.target.value);
-                      }}
-                      label="Eg:Income/Expens"
-                    />
-                  </MenuItem>
-                  <MenuItem>
-                    <Typography>Amount : </Typography>{" "}
-                    <TextField
-                      className="fields"
-                      id="standard-basic"
-                      variant="standard"
-                      type="Number"
-                      value={amount}
-                      label="$"
-                      required
-                      name="amount"
-                      onChange={(e) => {
-                        setAmount(e.target.value);
-                      }}
-                    />
-                  </MenuItem>
-                  <Button className="fields" variant="text" type="submit">
-                    Submit
-                  </Button>
-                </form>
-              </div>
-            </Menu>
-            {/* ---------------------- */}
-          </div>
-          {/* ---------------------------- */}
-          <div className="typos">
-            <Typography>{userName}</Typography>
-            {/* for Logout */}
-            <Tooltip title="Account settings">
-              <IconButton
-                onClick={handleClick}
-                size="small"
-                sx={{ ml: 2 }}
-                aria-controls={open ? "account-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
+              <ListItemIcon
+                sx={{ color: "#8a98d5c5" }}
+                onClick={() => history.push("/MainDashBoard")}
               >
-                <Avatar
-                  sx={{ width: 32, height: 32, bgcolor: "#2a9df4" }}
-                ></Avatar>
-              </IconButton>
-            </Tooltip>
+                <HomeIcon fontSize="small" />
+              </ListItemIcon>
+              Home
+            </MenuItem>
+            <MenuItem
+              disabled
+              className="menu-item"
+              onClick={() => history.push("/DashBoard")}
+            >
+              <ListItemIcon
+                sx={{ color: "#8a98d5c5" }}
+                onClick={() => history.push("/DashBoard")}
+              >
+                <ReceiptLongIcon fontSize="small" />
+              </ListItemIcon>
+              Transaction
+            </MenuItem>
+
+            <MenuItem className="menu-item" onClick={() => history.push("/")}>
+              <ListItemIcon
+                sx={{ color: "#8a98d5c5" }}
+                onClick={() => history.push("/")}
+              >
+                <LogoutIcon fontSize="small" />
+              </ListItemIcon>
+              Logout
+            </MenuItem>
           </div>
         </div>
-        {/* for logout pop-up */}
-        <Menu
-          anchorEl={anchorEl}
-          id="account-menu"
-          open={open}
-          onClose={handleClose}
-          onClick={handleClose}
-          PaperProps={{
-            elevation: 0,
-            sx: {
-              overflow: "visible",
-              filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-              mt: 2,
-              "& .MuiAvatar-root": {
-                width: 32,
-                height: 32,
-                ml: -0.5,
-                mr: 1,
-              },
-              "&:before": {
-                content: '""',
-                display: "block",
-                position: "absolute",
-                top: 0,
-                right: 14,
-                width: 10,
-                height: 10,
-                bgcolor: "background.paper",
-                transform: "translateY(-50%) rotate(45deg)",
-                zIndex: 0,
-              },
-            },
-          }}
-          transformOrigin={{ horizontal: "right", vertical: "top" }}
-          anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-        >
-          <MenuItem onClick={handleClose}>
-            <Avatar sx={{ bgcolor: "#2a9df4" }} /> My account
-          </MenuItem>
-          <Divider />
+        {/* HamBurger Menu End */}
+        {/* Add New Transactions */}
+        <div className="addNew">
+          <h5>Add your yearly, Monthly ,Weekly Transaction...&nbsp;&nbsp; </h5>
 
-          <MenuItem onClick={handleClose}>
-            <ListItemIcon sx={{ color: "#2a9df4" }}>
-              <Settings fontSize="small" />
-            </ListItemIcon>
-            Settings
-          </MenuItem>
-          <MenuItem onClick={() => history.push("/")}>
-            <ListItemIcon sx={{ color: "#2a9df4" }}>
-              <Logout fontSize="small" onClick={() => history.push("/")} />
-            </ListItemIcon>
-            Logout
-          </MenuItem>
-        </Menu>
-        {/* -------------------------------------- */}
+          <Tooltip title="Add Transaction">
+            <AddCircleOutlineOutlinedIcon
+              sx={{ color: "#e5eaf5" }}
+              onClick={() => history.push("/AddTrasaction")}
+            />
+          </Tooltip>
+        </div>
+        {/* Search By Catergory */}
+        <div className="addNew">
+          <h5>Search By Categories&nbsp;:&nbsp;&nbsp; </h5>
+
+          {/* for categories */}
+
+          <FormControl>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={type}
+              onChange={handleChange}
+              sx={{ width: 100, height: 30, mt: 1 }}
+            >
+              <MenuItem value="Personal">Personal</MenuItem>
+              <MenuItem value="Office">Office</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
+
+        {/* ----------------------- */}
+
         {/* For Table Transactions */}
         <div className="Table">
-          <Card className="user-table">
+          <div className="user-table">
             <Typography
               sx={{ minWidth: 100, mt: 2, ml: 2, mb: 1, color: "#6a329f" }}
             >
               Recent Transactions
             </Typography>
             <div>
-              <TableContainer component={Paper} className="Tablecontainer">
+              <TableContainer className="Tablecontainer">
                 <Table stickyHeader aria-label="sticky table">
                   <TableHead>
                     <TableRow>
@@ -569,7 +346,7 @@ const DashBoard = () => {
                             </TableCell>
                             <TableCell>
                               <ListItemIcon
-                                sx={{ color: "#2a9df4" }}
+                                sx={{ color: "#8a98d5c5" }}
                                 onClick={() =>
                                   history.push(`/edit/${item._id}`)
                                 }
@@ -579,7 +356,7 @@ const DashBoard = () => {
                             </TableCell>
                             <TableCell>
                               <ListItemIcon
-                                sx={{ color: "#2a9df4" }}
+                                sx={{ color: "#8a98d5c5" }}
                                 onClick={() => delTransData(item._id)}
                               >
                                 <DeleteOutlineIcon />
@@ -601,24 +378,9 @@ const DashBoard = () => {
                 </Table>
               </TableContainer>
             </div>
-          </Card>
+          </div>
           {/* <img className="imggif" src={gif} alt="Money_Management_vedio..." /> */}
         </div>
-        {/* For print */}
-        <SpeedDial
-          ariaLabel="SpeedDial basic example"
-          className="speeddail"
-          sx={{ position: "absolute", bottom: 16, right: 16 }}
-          icon={<SpeedDialIcon />}
-        >
-          {actions.map((action) => (
-            <SpeedDialAction
-              key={action.name}
-              icon={action.icon}
-              tooltipTitle={action.name}
-            />
-          ))}
-        </SpeedDial>
       </body>
     </div>
   );

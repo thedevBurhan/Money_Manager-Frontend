@@ -1,10 +1,9 @@
 import React from "react";
 import Base from "../../Base/Base";
+import "./Reg.css";
 import {
   Button,
-  Card,
   CardContent,
-  Checkbox,
   IconButton,
   Snackbar,
   TextField,
@@ -80,100 +79,91 @@ const Register = () => {
     // console.log(localStorage.setItem("token", data.token));
     handleClick();
   };
-  const label = { inputProps: { "aria-label": "Checkbox demo" } };
+
   const history = useHistory();
   return (
     <div>
-      <body className="mainBg">
+      <body className="mainBgReg">
         <Base title={"New Registration"}>
-          <div className="container">
-            <Card sx={{ p: "10px" }} className="Bg-color">
-              <form onSubmit={handleSubmit}>
-                <CardContent>
-                  <h2 className="headings">For New Users</h2>
-                  <TextField
-                    sx={{ width: "300px" }}
-                    id="standard-basic"
-                    variant="standard"
-                    label="Enter Name"
-                    name="name"
-                    type="name"
-                    size="small"
-                    onBlur={handleBlur}
-                    value={values.name}
-                    onChange={handleChange}
-                  />
-                  <div style={{ color: "crimson", fontSize: "small" }}>
-                    {touched.name && errors ? errors.name : ""}
-                  </div>
-                </CardContent>
-                <CardContent>
-                  <TextField
-                    sx={{ width: "300px" }}
-                    id="standard-basic"
-                    variant="standard"
-                    label="Email"
-                    name="email"
-                    onBlur={handleBlur}
-                    value={values.email}
-                    onChange={handleChange}
-                    type="email"
-                    size="small"
-                  />
-                  <div style={{ color: "crimson", fontSize: "small" }}>
-                    {touched.email && errors ? errors.email : ""}
-                  </div>
-                </CardContent>
-                <CardContent>
-                  <TextField
-                    sx={{ width: "300px" }}
-                    id="standard-basic"
-                    variant="standard"
-                    label="Password"
-                    name="password"
-                    onBlur={handleBlur}
-                    value={values.password}
-                    onChange={handleChange}
-                    type="password"
-                    size="small"
-                  />
-                  <div style={{ color: "crimson", fontSize: "small" }}>
-                    {touched.password && errors ? errors.password : ""}
-                  </div>
-                </CardContent>
-                <Checkbox {...label} size="smaller" required />
-                <span className="register-new">
-                  Agree to terms and conditions
-                </span>
-                <div className="Reg">
-                  <Button
-                    className="button-Bg"
-                    type="submit"
-                    variant="outlined"
-                  >
-                    Register
-                  </Button>
+          <div className="containerReg">
+            <form onSubmit={handleSubmit} className="formReg">
+              <CardContent>
+                <h2 className="headingsReg">For New Users</h2>
+                <TextField
+                  sx={{ width: "300px" }}
+                  id="standard-basic"
+                  variant="standard"
+                  label="Enter Name"
+                  name="name"
+                  type="name"
+                  size="small"
+                  onBlur={handleBlur}
+                  value={values.name}
+                  onChange={handleChange}
+                />
+                <div style={{ color: "crimson", fontSize: "small" }}>
+                  {touched.name && errors ? errors.name : ""}
                 </div>
-              </form>
-              <div className="bg">
-                <h3 className="sub_heading">For Current Users</h3>
+              </CardContent>
+              <CardContent>
+                <TextField
+                  sx={{ width: "300px" }}
+                  id="standard-basic"
+                  variant="standard"
+                  label="Email"
+                  name="email"
+                  onBlur={handleBlur}
+                  value={values.email}
+                  onChange={handleChange}
+                  type="email"
+                  size="small"
+                />
+                <div style={{ color: "crimson", fontSize: "small" }}>
+                  {touched.email && errors ? errors.email : ""}
+                </div>
+              </CardContent>
+              <CardContent>
+                <TextField
+                  sx={{ width: "300px" }}
+                  id="standard-basic"
+                  variant="standard"
+                  label="Password"
+                  name="password"
+                  onBlur={handleBlur}
+                  value={values.password}
+                  onChange={handleChange}
+                  type="password"
+                  size="small"
+                />
+                <div style={{ color: "crimson", fontSize: "small" }}>
+                  {touched.password && errors ? errors.password : ""}
+                </div>
+              </CardContent>
+              <div className="RegReg">
                 <Button
-                  className="button-Bg"
+                  className="button-BgReg"
+                  type="submit"
+                  variant="outlined"
+                >
+                  Sign Up
+                </Button>
+                <Button
+                  className="button-BgReg"
                   onClick={() => history.push("/")}
                   variant="outlined"
                 >
                   Login
                 </Button>
               </div>
-            </Card>
-            <Snackbar
-              open={open}
-              autoHideDuration={3000}
-              onClose={handleClose}
-              message="Signin Successfull"
-              action={action}
-            />
+            </form>
           </div>
+          <Snackbar
+            open={open}
+            autoHideDuration={3000}
+            onClose={handleClose}
+            message="Signin Successfull"
+            action={action}
+          />
         </Base>
       </body>
     </div>

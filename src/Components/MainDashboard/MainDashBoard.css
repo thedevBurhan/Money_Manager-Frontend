@@ -1,0 +1,80 @@
+.hamburger-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  left: 0px;
+  margin-top: 15px;
+  margin-left: 30px;
+}
+
+.menu-button {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  /* padding: 10px; */
+}
+
+.menu-items {
+  position: absolute;
+  opacity: 0;
+  top: 20px;
+  left: 0;
+  /* background-color: #fff; */
+  /* box-shadow: 0 8px 16px rgba(0, 0, 0, 0.152); */
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  z-index: 10;
+  /* border: 10px solid black; */
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.menu-items.open {
+  max-height: 180px;
+  background: rgba(255, 255, 255, 0.55);
+  -webkit-backdrop-filter: blur(1px);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.275);
+  opacity: 100;
+  /* background-color: #fff; */
+  box-shadow: 0 8px 16px rgba(153, 153, 153, 0.633);
+  /* border: 5px solid black; */
+}
+
+.menu-item {
+  padding: 5px;
+  cursor: pointer;
+  /* border: 1px solid black; */
+  transition: background-color 0.1s;
+}
+
+.menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.55);
+}
+.Essay {
+  background: rgba(255, 255, 255, 0.55);
+  -webkit-backdrop-filter: blur(1px);
+  backdrop-filter: blur(1px);
+  border: 1px solid rgba(255, 255, 255, 0.275);
+  border-radius: 20px;
+  width: auto;
+  margin: 0 50px 50px 50px;
+  height: auto;
+  /* background-color: #fff; */
+  box-shadow: 0 8px 16px rgba(153, 153, 153, 0.273);
+  /* border: 5px solid black; */
+}
+.paragraph {
+  /* border: 1px solid black; */
+  text-indent: 30px;
+  padding: 20px 20px 10px 20px;
+  text-align: justify;
+}
+.Essay_heading {
+  padding: 0px 20px 1px 20px;
+}
